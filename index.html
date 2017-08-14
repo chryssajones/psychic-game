@@ -1,0 +1,98 @@
+<html>
+<head>
+</head>
+<body>
+
+	<h1>The Psychic Game</h1>
+	<p>Guess what letter I'm thinking?</p>
+	<br>
+
+	Wins: <span id="spanUserWins">0</span><br/>
+	Losses: <span id="spanComputerWins">0</span><br/>
+	<br>
+	Result: <span id="spanResult"></span><br/>
+	<br>
+	Guesses remaining: <span id="spanRemaining">10</span><br/>
+	Letters guessed so far: <span id="spanGuesses"></span><br/>
+
+</body>
+
+<script>
+//on page load
+	var machinePick;
+	var userPick;
+	var wins = 0;
+	var losses = 0;
+	var guesses = 10;
+	var lettersGuessed = []
+	var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+    var spanMachinePick = document.getElementById("spanMachinePick");
+    var spanUserPick = document.getElementById("spanUserPick");
+    var spanUserWins = document.getElementById("spanUserWins");
+    var spanComputerWins = document.getElementById("spanComputerWins");
+	var spanResult = document.getElementById("spanResult");
+
+
+	//computer picks letter on page load
+	var m = Math.floor((Math.random() * 26) + 0);
+	console.log(m)
+	var machinePick = alphabet[m]
+	console.log(machinePick)
+
+	//user presses a key to pick letter, which triggers the following function:
+	document.onkeyup = function(event) {
+      var keyHit = event.key;
+      userPick = keyHit;
+      console.log(userPick)
+
+      if (userPick == machinePick) {
+      	console.log("win!")
+      	wins = wins + 1
+      	console.log(wins)
+      	spanResult.textContent = "Wow, you're psychic!";
+      	guesses = 10
+      }
+
+      else {
+      	console.log("try again")
+      	spanResult.textContent = "No, guess again!"
+      	guesses = guesses - 1
+      	lettersGuessed.push(keyHit);
+      	spanGuesses.textContent = lettersGuessed.join(", ");
+      	console.log(lettersGuessed)
+      		if (guesses <= 0) {
+      			losses = losses + 1
+      			guesses = 10
+      		}
+      }
+
+      spanUserWins.textContent = wins;
+      spanComputerWins.textContent = losses;
+      spanRemaining.textContent = guesses;
+
+}
+	
+</script>
+</html>
+
+<!--Pseudocode starts here:
+
+Start game: set wins=0, losses=0, guesses=10
+Step 1: computer randomly assigns a letter to a variable.
+Step 2: listen (wait) for user to press a key and record the key entry on event=keyup
+Step 3: does the guess match the computer's variable?
+	If yes, +1 to wins and reset game
+	If no, -1 to guesses and add the guess to the list of letters guessed so far
+Step 4: Is guesses remaining > 0?
+	If yes, repeat process @ step 2
+	If no, +1 to losses and reset game
+
+Needed to reset the game:
+	clear lettersGuessed array
+	set guesses = 0
+	pick an new letter
+	leave wins and losses the same
+
+
+-->
