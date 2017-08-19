@@ -33,11 +33,15 @@
     var spanComputerWins = document.getElementById("spanComputerWins");
 	var spanResult = document.getElementById("spanResult");
 
-	//computer picks letter on page load
+	//letter-picking function
+	function letterPick() {
 	var m = Math.floor((Math.random() * 26) + 0);
-	console.log(m)
-	var machinePick = alphabet[m]
-	console.log(machinePick)
+	machinePick = alphabet[m]
+	}
+
+	//call the function to begin
+	letterPick();
+	console.log(machinePick);
 
 	//user presses a key to pick letter, which triggers the following function:
 	document.onkeyup = function(event) {
@@ -52,6 +56,8 @@
       	spanResult.textContent = "Wow, you're psychic!";
       	guesses = 10
       	lettersGuessed = []
+      	letterPick();
+      	console.log("new pick " + machinePick)
       }
 
       else if (lettersGuessed.indexOf(userPick) >= 0) {
@@ -68,7 +74,9 @@
       		if (guesses <= 0) {
       			losses = losses + 1
       			guesses = 10
-      			lettersGuessed = []      			
+      			lettersGuessed = []
+      			letterPick();
+      			console.log("new pick " + machinePick)   			
       		}
 
       }
@@ -99,12 +107,5 @@ Needed to reset the game:
 	set guesses = 0
 	pick an new letter
 	leave wins and losses the same
-
-11:45pm 8/13/17
-tried turning the machinePick process into a function, and then calling it at the end of each round to pick a new letter, but that didn't work.  The new variable wasn't being stored outside of the function and so the variable "machinePick" was undefined when comparing it to the userPick.
-
-Also tried removing the function and putting the machinePick code directly into the if statements, but it doesn't work there, probably because it's embedded in the onKeyHit funciton.
-
-Consider trying a while loop.  Game logic was restored and game functions again, except reset.
 
 -->
